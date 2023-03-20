@@ -20,10 +20,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     // ====================================Designation===================================
     Route::get('/designation', 'DesignationController@index')->name('designation');
-    // Route::post('/addCompany', 'CompanyController@addCompany')->name('addCompany');
+    Route::post('/addDesignation', 'DesignationController@addDesignation')->name('addDesignation');
     // Route::get('/editTest/{id}', 'TestController@editTest')->name('editTest');
     // Route::post('/updateTest', 'TestController@updateTest')->name('updateTest');
-    // Route::get('/deleteCompany/{id}', 'CompanyController@deleteCompany')->name('deleteCompany');
+    Route::get('/deleteDesignation/{id}', 'DesignationController@deleteDesignation')->name('deleteDesignation');
     // ====================================Designation===================================
     
     // ====================================Group===================================

@@ -4,82 +4,59 @@ namespace App\Http\Controllers;
 
 use App\Designation;
 use Illuminate\Http\Request;
+use DB;
 
 class DesignationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
+
+        $Designation = Designation::all();
+        // dd($Designation);
+        if(request()->ajax())
+        {
+            return datatables()->of($Designation)
+                    
+                    ->addColumn('action', function($data){
+                        $button = '<button type="button" onclick="deleteModal('.$data->id.',\''.$data->designation_name.'\')" name="delete" id="'.$data->id.'" class="delete btn btn-sm" data-toggle="modal" data-target="#DeleteConfirmationModal" data-placement="top" title="Delete"  style="color: red"><i class="fa fa-trash"> Delete</i></button></div>';
+                        
+                        return $button;
+                    })
+                    ->rawColumns(['action'])
+                    ->addIndexColumn()
+                    ->make(true);
+                    
+        }
         return view('designation');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    
+    public function addDesignation(Request $request)
     {
-        //
+        // dd($request->designation_name);
+        $Designation = new Designation;
+        $Designation->designation_name = $request->designation_name;
+        $Designation->salary = $request->salary;
+        $Designation->save();
+
+        if ($Designation->id) {
+            return response()->json(['success' => 'Added successfully.']);
+        } else {
+            return response()->json(['failed' => 'Added failed.']);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function deleteDesignation($id)
     {
-        //
+        $Designation = Designation::find($id)->delete();
+        // $flight->delete();
+        if ($Designation) {
+            return response()->json(['success' => 'Delete successfully !!!']);
+        } else {
+            return response()->json(['falied' => 'Delete falied !!!']);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Designation  $designation
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Designation $designation)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Designation  $designation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Designation $designation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Designation  $designation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Designation $designation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Designation  $designation
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Designation $designation)
-    {
-        //
-    }
+    
 }
