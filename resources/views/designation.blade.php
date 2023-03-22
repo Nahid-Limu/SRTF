@@ -20,7 +20,7 @@
               <tr>
                   <th class="text-center">#NO</th>
                   <th class="text-center">Designation</th>
-                  <th class="text-center">Salary</th>
+                  <th class="text-center">Salary BDT/hr</th>
                   <th class="text-center">Action</th>
               </tr>
           </thead>
@@ -67,7 +67,7 @@
             orderable: false
         }
       ]
-  });
+});
 
  function addDesignation() {
        if ( $( "#designation_name" ).val() != '' ) {

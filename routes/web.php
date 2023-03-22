@@ -26,19 +26,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/deleteDesignation/{id}', 'DesignationController@deleteDesignation')->name('deleteDesignation');
     // ====================================Designation===================================
     
-    // ====================================Group===================================
-    // Route::get('/group', 'GroupController@index')->name('group');
-    // Route::post('/addGroup', 'GroupController@addGroup')->name('addGroup');
-    // Route::get('/deleteGroup/{id}', 'GroupController@deleteGroup')->name('deleteGroup');
-    // ====================================Group===================================
+    //====================================Shift===================================
+    Route::get('/shift', 'ShiftController@index')->name('shift');
+    Route::post('/addShift', 'ShiftController@addShift')->name('addShift');
+    Route::get('/deleteShift/{id}', 'ShiftController@deleteShift')->name('deleteShift');
+    //====================================Shift===================================
 
-    // ====================================Product===================================
-    // Route::get('/product', 'ProductController@index')->name('product');
-    // Route::post('/addProduct', 'ProductController@addProduct')->name('addProduct');
-    // Route::get('/editProduct/{id}', 'ProductController@editProduct')->name('editProduct');
-    // Route::post('/updateProduct', 'ProductController@updateProduct')->name('updateProduct');
-    // Route::get('/deleteProduct/{id}', 'ProductController@deleteProduct')->name('deleteProduct');
-    // ====================================Product===================================
+    // ====================================Employee===================================
+    Route::get('/employee', 'EmployeeController@index')->name('employee');
+    Route::post('/addEmployee', 'EmployeeController@addEmployee')->name('addEmployee');
+    Route::get('/editEmployee/{id}', 'EmployeeController@editEmployee')->name('editEmployee');
+    Route::post('/updateEmployee', 'EmployeeController@updateEmployee')->name('updateEmployee');
+    Route::get('/deleteEmployee/{id}', 'EmployeeController@deleteEmployee')->name('deleteEmployee');
+    // ====================================Employee===================================
 
     
 

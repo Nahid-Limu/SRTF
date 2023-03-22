@@ -4,7 +4,7 @@
       
       <div class="row">
         <div class="col-md-8 col-sm-6 col-xs-12">
-          <p class="copyright-text">Copyright &copy; 2020 All Rights Reserved by 
+          <p class="copyright-text">Copyright &copy; 2023 All Rights Reserved by 
             <a href="https://nahid-limu.github.io/" target="_blank" data-toggle="tooltip" data-placement="top" title="Click To See Portfolio">Nahid Limu</a>.
           </p>
         </div>

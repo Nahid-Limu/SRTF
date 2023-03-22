@@ -136,8 +136,8 @@
           <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Settings:</h6>
               <a class="collapse-item" href="{{ route('designation') }}">Designation</a>
-              <a class="collapse-item" href="">Group</a>
-              <a class="collapse-item" href="">Product</a>
+              <a class="collapse-item" href="{{ route('shift') }}">Shift</a>
+              <a class="collapse-item" href="{{ route('employee') }}">Employee</a>
           </div>
       </div>
   </li>
