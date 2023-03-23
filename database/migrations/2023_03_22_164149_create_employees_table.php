@@ -15,6 +15,12 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('employee_name',100)->nullable();
+            $table->string('employee_code',100)->nullable()->index();
+            $table->integer('employee_phone')->nullable();
+            $table->integer('designation_id')->nullable()->index();
+            $table->integer('shift_id')->nullable()->index();
+            $table->tinyInteger('status')->comment('"1" is enable or  "0" disable')->default(0);
             $table->timestamps();
         });
     }

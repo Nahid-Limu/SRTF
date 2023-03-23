@@ -38,6 +38,7 @@ class DesignationController extends Controller
         $Designation = new Designation;
         $Designation->designation_name = $request->designation_name;
         $Designation->salary = $request->salary;
+        $Designation->status = 0;
         $Designation->save();
 
         if ($Designation->id) {

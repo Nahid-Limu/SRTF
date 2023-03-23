@@ -17,6 +17,7 @@ class CreateDesignationsTable extends Migration
             $table->increments('id');
             $table->string('designation_name')->nullable();
             $table->double('salary')->nullable();
+            $table->tinyInteger('status')->comment('"1" is enable or  "0" disable')->default(0);
             $table->timestamps();
         });
     }

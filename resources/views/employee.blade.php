@@ -18,12 +18,12 @@
         <table id="EmployeeListTable" class="table table-striped table-bordered">
           <thead>
               <tr>
-                  {{-- <th class="text-center">#NO</th> --}}
-                  <th class="text-center">Shift</th>
-                  <th class="text-center">Entry</th>
-                  <th class="text-center">Exit</th>
-                  <th class="text-center">Break</th>
-                  <th class="text-center">Work Time</th>
+                  <th class="text-center">#NO</th>
+                  <th class="text-center">Name</th>
+                  <th class="text-center">Code</th>
+                  <th class="text-center">Phone</th>
+                  <th class="text-center">Designation</th>
+                  <th class="text-center">Time</th>
                   <th class="text-center">Action</th>
               </tr>
           </thead>
@@ -42,39 +42,39 @@
 {{-- <script src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js" ></script> --}}
 <script>
  
- $('#ShiftListTable').DataTable({
+ $('#EmployeeListTable').DataTable({
       processing: true,
       serverSide: true,
       responsive: true,
       "order": [[ 0, "asc" ]],
       ajax:{
-        url: "{{ route('shift') }}",
+        url: "{{ route('employee') }}",
       },
       columns:[
-        // { 
-        //     data: 'DT_RowIndex', 
-        //     name: 'DT_RowIndex' 
-        // },
+        { 
+            data: 'DT_RowIndex', 
+            name: 'DT_RowIndex' 
+        },
         
         {
-            data: 'shift_name',
-            name: 'shift_name'
+            data: 'employee_name',
+            name: 'employee_name'
         },
         {
-            data: 'entry_time',
-            name: 'entry_time'
+            data: 'employee_code',
+            name: 'employee_code'
         },
         {
-            data: 'exit_time',
-            name: 'exit_time'
+            data: 'employee_phone',
+            name: 'employee_phone'
         },
         {
-            data: 'break_time',
-            name: 'break_time'
+            data: 'designation',
+            name: 'designation'
         },
         {
-            data: 'work_time',
-            name: 'work_time'
+            data: 'time',
+            name: 'time'
         },
         {
             data: 'action',
@@ -84,52 +84,52 @@
       ]
 });
 
- function addShift() {
-       if ( $( "#shift_name" ).val() != '' ) {
-           $("#shift_name").removeClass("errorInputBox");
-           $( "#shift_nameError").text('').removeClass("ErrorMsg");
+ function addEmployee() {
+       if ( $( "#employee_name" ).val() != '' ) {
+           $("#employee_name").removeClass("errorInputBox");
+           $( "#employee_nameError").text('').removeClass("ErrorMsg");
            
        } else {
-           $("#shift_name").addClass("errorInputBox");
-           $( "#shift_nameError").text('Shift Is Required').addClass("ErrorMsg");
+           $("#employee_name").addClass("errorInputBox");
+           $( "#employee_nameError").text('Employee_name Is Required').addClass("ErrorMsg");
        }
 
-       if ( $( "#entry_time" ).val() != '' ) {
-           $("#entry_time").removeClass("errorInputBox");
-           $( "#entry_timeError").text('').removeClass("ErrorMsg");
+       if ( $( "#employee_phone" ).val() != '' ) {
+           $("#employee_phone").removeClass("errorInputBox");
+           $( "#employee_phoneError").text('').removeClass("ErrorMsg");
            
        } else {
-           $("#entry_time").addClass("errorInputBox");
-           $( "#entry_timeError").text('Entry Time Is Required').addClass("ErrorMsg");
+           $("#employee_phone").addClass("errorInputBox");
+           $( "#employee_phoneError").text('Phone Number Is Required').addClass("ErrorMsg");
        }
 
-       if ( $( "#exit_time" ).val() != '' ) {
-           $("#exit_time").removeClass("errorInputBox");
-           $( "#exit_timeError").text('').removeClass("ErrorMsg");
+       if ( $( "#designation_id" ).val() != '' ) {
+           $("#designation_id").removeClass("errorInputBox");
+           $( "#designation_idError").text('').removeClass("ErrorMsg");
            
        } else {
-           $("#exit_time").addClass("errorInputBox");
-           $( "#exit_timeError").text('Exit Time Is Required').addClass("ErrorMsg");
+           $("#designation_id").addClass("errorInputBox");
+           $( "#designation_idError").text('Designation Is Required').addClass("ErrorMsg");
        }
 
-       if ( $( "#break_time" ).val() != '' ) {
-           $("#break_time").removeClass("errorInputBox");
-           $( "#break_timeError").text('').removeClass("ErrorMsg");
+       if ( $( "#shift_id" ).val() != '' ) {
+           $("#shift_id").removeClass("errorInputBox");
+           $( "#shift_idError").text('').removeClass("ErrorMsg");
            
        } else {
-           $("#break_time").addClass("errorInputBox");
-           $( "#break_timeError").text('Break Time Is Required').addClass("ErrorMsg");
+           $("#shift_id").addClass("errorInputBox");
+           $( "#shift_idError").text('Shift Is Required').addClass("ErrorMsg");
        }
+       
+       if ( $( "#employee_name" ).val() && $( "#employee_phone" ).val() && $( "#designation_id" ).val() && $( "#shift_id" ).val()  ) {
 
-       if ( $( "#shift_name" ).val() && $( "#entry_time" ).val() && $( "#exit_time" ).val() && $( "#break_time" ).val() ) {
-           $( "#shift_nameError,#entry_timeError,#exit_timeError,#break_timeError").text('');
-           $( "#shift_name,#entry_time,#exit_time,#break_time").removeClass("errorInputBox");
-         
-           var myData =  $('#AddShiftForm').serialize();
-           // alert(myData);
+           $( "#employee_nameError,#employee_phoneError,#ddesignation_idError,#shift_idError").text('');
+           $( "#employee_name,#employee_phone,#ddesignation_id,#shift_id").removeClass("errorInputBox");
+           var myData =  $('#AddEmployeeForm').serialize();
+        //    alert(myData);
            $.ajax({
                type: 'POST', //THIS NEEDS TO BE GET
-               url: "{{ route('addShift') }}",
+               url: "{{ route('addEmployee') }}",
                // data: {_token: _token, clintName: clintName,age: age,sex: sex,address: address,ref_dr: ref_dr},
                // data: {_token: _token, myData: myData},
                data: myData,
@@ -139,9 +139,9 @@
                    if (response.success) {
                      
                      $("#success_message").text(response.success);
-                     $('#ShiftListTable').DataTable().ajax.reload();
-                     $('#AddShiftModal').modal('hide');
-                     $("#AddShiftForm").trigger("reset");
+                     $('#EmployeeListTable').DataTable().ajax.reload();
+                     $('#AddEmployeeModal').modal('hide');
+                     $("#AddEmployeeForm").trigger("reset");
                      
                      SuccessMsg();
                    }

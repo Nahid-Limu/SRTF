@@ -17,7 +17,7 @@
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label class="form-control" for="employee_name">Employee</label>
+                            <label class="form-control" for="employee_name">Name</label>
                         </div>
                         <div class="form-group col-md-8">
                             <input type="text" class="form-control" id="employee_name" name="employee_name" required>
@@ -27,10 +27,20 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-4">
+                            <label class="form-control" for="employee_phone">Phone</label>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <input type="tel" class="form-control" id="employee_phone" name="employee_phone" required>
+                            <span id="employee_phoneError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
                             <label class="form-control" for="designation">Designation</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <select class="form-control" id="designation" name="designation" required>
+                            <select class="form-control" id="designation_id" name="designation_id" required>
                                 <option >Select One</option>
                                 @foreach ($Designation as $d)
                                     <option value="{{$d->id}}">{{$d->designation_name}}</option>
@@ -45,7 +55,7 @@
                             <label class="form-control" for="shift">Shift</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <select class="form-control" id="shift" name="shift" required>
+                            <select class="form-control" id="shift_id" name="shift_id" required>
                                 <option >Select One</option>
                                 @foreach ($Shift as $s)
                                     <option value="{{$s->id}}">{{$s->shift_name}}</option>
@@ -60,7 +70,7 @@
 
             <!-- Modal footer  class="modal-footer"-->
             <div class="modal-footer" style="display: inline">
-                <button onclick="addShift()" type="button" class="btn btn-success float-right">Add</button>
+                <button onclick="addEmployee()" type="button" class="btn btn-success float-right">Add</button>
                 <button onclick="onCloseModal('AddShiftForm')" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 {{-- <button onclick="testfun()" type="button" class="btn btn-danger">test</button> --}}
             </div>

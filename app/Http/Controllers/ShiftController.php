@@ -26,14 +26,14 @@ class ShiftController extends Controller
                         
                         return $button;
                     })
-                    ->editColumn('entry_time', function ($Shift) {
-                        return date('h:i A', strtotime($Shift->entry_time));
+                    ->editColumn('entry_time', function ($data) {
+                        return date('h:i A', strtotime($data->entry_time));
                     })
-                    ->editColumn('exit_time', function ($Shift) {
-                        return date('h:i A', strtotime($Shift->exit_time));
+                    ->editColumn('exit_time', function ($data) {
+                        return date('h:i A', strtotime($data->exit_time));
                     })
-                    ->editColumn('break_time', function ($Shift) {
-                        return date('h:i', strtotime($Shift->break_time))." Hr";
+                    ->editColumn('break_time', function ($data) {
+                        return date('h:i', strtotime($data->break_time))." Hr";
                     })
 
                     ->addColumn('work_time', function($data){
@@ -58,6 +58,7 @@ class ShiftController extends Controller
         $Shift->entry_time = date("G:i", strtotime($request->entry_time));
         $Shift->exit_time = date("G:i", strtotime($request->exit_time));
         $Shift->break_time = date("G:i", strtotime($request->break_time));
+        $Shift->status = 0;
         $Shift->save();
 
         if ($Shift->id) {

@@ -19,6 +19,7 @@ class CreateShiftsTable extends Migration
             $table->time('entry_time')->nullable();
             $table->time('exit_time')->nullable();
             $table->time('break_time')->nullable();
+            $table->tinyInteger('status')->comment('"1" is enable or  "0" disable')->default(0);
             $table->timestamps();
         });
     }
