@@ -35,10 +35,21 @@ Route::group(['middleware' => 'auth'], function () {
     // ====================================Employee===================================
     Route::get('/employee', 'EmployeeController@index')->name('employee');
     Route::post('/addEmployee', 'EmployeeController@addEmployee')->name('addEmployee');
-    Route::get('/editEmployee/{id}', 'EmployeeController@editEmployee')->name('editEmployee');
-    Route::post('/updateEmployee', 'EmployeeController@updateEmployee')->name('updateEmployee');
+    // Route::get('/editEmployee/{id}', 'EmployeeController@editEmployee')->name('editEmployee');
+    // Route::post('/updateEmployee', 'EmployeeController@updateEmployee')->name('updateEmployee');
     Route::get('/deleteEmployee/{id}', 'EmployeeController@deleteEmployee')->name('deleteEmployee');
     // ====================================Employee===================================
+
+
+    // ====================================Attendance===================================
+    Route::get('/attendance', 'AttendanceController@index')->name('attendance');
+    Route::get('/checkInOut/{id}/{check}', 'AttendanceController@checkInOut')->name('checkInOut');
+    Route::post('/addAttendance', 'AttendanceController@addAttendance')->name('addAttendance');
+    // Route::get('/editAttendance/{id}', 'AttendanceController@editAttendance')->name('editAttendance');
+    // Route::post('/updateAttendance', 'AttendanceController@updateAttendance')->name('updateAttendance');
+    Route::get('/deleteAttendance/{id}', 'AttendanceController@deleteAttendance')->name('deleteAttendance');
+    // ====================================Attendance===================================
+
 
     
 

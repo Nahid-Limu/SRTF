@@ -76,4 +76,15 @@ class EmployeeController extends Controller
             return response()->json(['failed' => 'Added failed.']);
         }
     }
+
+    public function deleteEmployee($id)
+    {
+        $Employee = Employee::find($id)->delete();
+        // $flight->delete();
+        if ($Employee) {
+            return response()->json(['success' => 'Delete successfully !!!']);
+        } else {
+            return response()->json(['falied' => 'Delete falied !!!']);
+        }
+    }
 }

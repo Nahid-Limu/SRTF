@@ -67,11 +67,11 @@
 
   <!-- Heading -->
   <div class="sidebar-heading">
-      Addons
+      Core
   </div>
 
   <!-- Nav Item - Pages Collapse Menu -->
-  <li class="nav-item">
+  {{-- <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
           aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
@@ -111,13 +111,13 @@
             <i class="fas fa-fw fa-shipping-fast"></i>
             <span>Delivery</span>
         </a>
-    </li>
+    </li> --}}
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Stock</span>
+        <a class="nav-link" href="{{ route('attendance') }}">
+            <i class="fas fa-calendar-check"></i>
+            <span>Attendance</span>
         </a>
     </li>
 

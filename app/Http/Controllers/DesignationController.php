@@ -13,7 +13,7 @@ class DesignationController extends Controller
     {
 
         $Designation = Designation::all();
-        // dd($Designation);
+        
         if(request()->ajax())
         {
             return datatables()->of($Designation)

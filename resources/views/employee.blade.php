@@ -23,7 +23,7 @@
                   <th class="text-center">Code</th>
                   <th class="text-center">Phone</th>
                   <th class="text-center">Designation</th>
-                  <th class="text-center">Time</th>
+                  <th class="text-center">Working Time</th>
                   <th class="text-center">Action</th>
               </tr>
           </thead>
@@ -157,14 +157,14 @@
      // alert(TestId);
      $.ajax({
         type: 'GET',
-        url: "{{url('deleteDesignation')}}"+"/"+id,
+        url: "{{url('deleteEmployee')}}"+"/"+id,
          
          success: function (response) {
              console.log(response);
              if (response.success) {
                      
                $("#success_message").text(response.success);
-               $('#DesignationListTable').DataTable().ajax.reload();
+               $('#EmployeeListTable').DataTable().ajax.reload();
                $('#DeleteConfirmationModal').modal('hide');
 
                SuccessMsg();

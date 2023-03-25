@@ -22,7 +22,7 @@
                   <th class="text-center">Shift</th>
                   <th class="text-center">Entry</th>
                   <th class="text-center">Exit</th>
-                  <th class="text-center">Break</th>
+                  <th class="text-center">Break (Total)</th>
                   <th class="text-center">Work Time</th>
                   <th class="text-center">Action</th>
               </tr>
