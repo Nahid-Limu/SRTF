@@ -26,7 +26,7 @@
                   <th class="text-center">Break</th>
                   <th class="text-center">Lunch </th>
                   <th class="text-center">check Out</th>
-                  <th class="text-center">Action</th>
+                  {{-- <th class="text-center">Action</th> --}}
               </tr>
           </thead>
   
@@ -79,15 +79,19 @@
             name: 'breakfast'
         },
         {
+            data: 'lunch',
+            name: 'lunch'
+        },
+        {
             data: 'checkOut',
             name: 'checkOut'
         },
         
-        {
-            data: 'action',
-            name: 'action',
-            orderable: false
-        }
+        // {
+        //     data: 'action',
+        //     name: 'action',
+        //     orderable: false
+        // }
       ]
 });
 
@@ -104,7 +108,7 @@
                      
                $("#success_message").text(response.success);
                $('#AttendanceListTable').DataTable().ajax.reload();
-               $('#DeleteConfirmationModal').modal('hide');
+            //    $('#DeleteConfirmationModal').modal('hide');
 
                SuccessMsg();
              }
@@ -117,26 +121,49 @@
 
 
  function breakOnOff(emp_id,breakfast) {
-     alert(breakfast);
-    //  $.ajax({
-    //     type: 'GET',
-    //     url: "{{url('checkInOut')}}"+"/"+emp_id+"/"+check,
+    //  alert(emp_id);
+     $.ajax({
+        type: 'GET',
+        url: "{{url('breakFast')}}"+"/"+emp_id+"/"+breakfast,
          
-    //      success: function (response) {
-    //          console.log(response);
-    //          if (response.success) {
+         success: function (response) {
+             console.log(response);
+             if (response.success) {
                      
-    //            $("#success_message").text(response.success);
-    //            $('#AttendanceListTable').DataTable().ajax.reload();
-    //            $('#DeleteConfirmationModal').modal('hide');
+                $("#success_message").text(response.success);
+                $('#AttendanceListTable').DataTable().ajax.reload();
+                // $('#DeleteConfirmationModal').modal('hide');
 
-    //            SuccessMsg();
-    //          }
+               SuccessMsg();
+             }
 
-    //      },error:function(){ 
-    //          console.log(response);
-    //      }
-    //  });
+         },error:function(){ 
+             console.log(response);
+         }
+     });
+ }
+
+ function lunchOnOff(emp_id,lunch) {
+    //  alert(lunch);
+     $.ajax({
+        type: 'GET',
+        url: "{{url('lunch')}}"+"/"+emp_id+"/"+lunch,
+         
+         success: function (response) {
+             console.log(response);
+             if (response.success) {
+                     
+                $("#success_message").text(response.success);
+                $('#AttendanceListTable').DataTable().ajax.reload();
+                // $('#DeleteConfirmationModal').modal('hide');
+
+               SuccessMsg();
+             }
+
+         },error:function(){ 
+             console.log(response);
+         }
+     });
  }
  
 </script>
