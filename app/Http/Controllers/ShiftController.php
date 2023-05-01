@@ -11,7 +11,8 @@ class ShiftController extends Controller
     public function index()
     {
         
-        // $Shift = Shift::first();
+        // $Shift = Shift::all();
+        // dd( $Shift);
         // $time =  ( date( "H:i", strtotime("00:00") + strtotime($Shift->exit_time) - strtotime($Shift->entry_time) ) );
         // $f =  ( date( "H:i", strtotime("00:00") + strtotime($time) - strtotime($Shift->break_time) ) );
         // dd( $f);
@@ -26,6 +27,22 @@ class ShiftController extends Controller
                         
                         return $button;
                     })
+                    // ->editColumn('entry_time', function ($data) {
+                    //     return date('h:i A', strtotime($data->entry_time));
+                    // })
+                    // ->editColumn('exit_time', function ($data) {
+                    //     return date('h:i A', strtotime($data->exit_time));
+                    // })
+                    // ->editColumn('break_time', function ($data) {
+                    //     return date('h:i', strtotime($data->break_time))." Hr";
+                    // })
+
+                    // ->addColumn('work_time', function($data){
+                    //     return ( date( "H:i", strtotime("00:00") + strtotime($data->exit_time) - strtotime($data->entry_time) - strtotime($data->break_time)  ) );
+                        
+                    //     return $button;
+                    // })
+
                     ->editColumn('entry_time', function ($data) {
                         return date('h:i A', strtotime($data->entry_time));
                     })
@@ -37,7 +54,7 @@ class ShiftController extends Controller
                     })
 
                     ->addColumn('work_time', function($data){
-                        return ( date( "H:i", strtotime("00:00") + strtotime($data->exit_time) - strtotime($data->entry_time) - strtotime($data->break_time)  ) );
+                        return abs( ( ( int)$data->exit_time - (int)$data->entry_time ) ) - (int)$data->break_time  ." Hr";
                         
                         return $button;
                     })
@@ -55,9 +72,9 @@ class ShiftController extends Controller
         // dd($request->all());
         $Shift = new Shift;
         $Shift->shift_name = $request->shift_name;
-        $Shift->entry_time = date("G:i", strtotime($request->entry_time));
-        $Shift->exit_time = date("G:i", strtotime($request->exit_time));
-        $Shift->break_time = date("G:i", strtotime($request->break_time));
+        $Shift->entry_time = $request->entry_time;
+        $Shift->exit_time = $request->exit_time;
+        $Shift->break_time = $request->break_time;
         $Shift->status = 0;
         $Shift->save();
 

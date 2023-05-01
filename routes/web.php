@@ -43,16 +43,19 @@ Route::group(['middleware' => 'auth'], function () {
 
     // ====================================Attendance===================================
     Route::get('/attendance', 'AttendanceController@index')->name('attendance');
-    Route::get('/checkInOut/{id}/{check}', 'AttendanceController@checkInOut')->name('checkInOut');
+    Route::get('/checkInOut/{id}/{check}/{shiftsId}', 'AttendanceController@checkInOut')->name('checkInOut');
     Route::get('/breakFast/{id}/{breakfast}', 'AttendanceController@breakFast')->name('breakFast');
     Route::get('/lunch/{id}/{lunch}', 'AttendanceController@lunch')->name('lunch');
-
-    Route::post('/addAttendance', 'AttendanceController@addAttendance')->name('addAttendance');
-    // Route::get('/editAttendance/{id}', 'AttendanceController@editAttendance')->name('editAttendance');
-    // Route::post('/updateAttendance', 'AttendanceController@updateAttendance')->name('updateAttendance');
-    Route::get('/deleteAttendance/{id}', 'AttendanceController@deleteAttendance')->name('deleteAttendance');
     // ====================================Attendance===================================
 
+
+    // ====================================Report===================================
+    Route::get('/report', 'ReportController@index')->name('report');
+    // Route::post('/addDesignation', 'ReportController@addDesignation')->name('addDesignation');
+    // Route::get('/editTest/{id}', 'TestController@editTest')->name('editTest');
+    // Route::post('/updateTest', 'TestController@updateTest')->name('updateTest');
+    // Route::get('/deleteDesignation/{id}', 'DesignationController@deleteDesignation')->name('deleteDesignation');
+    // ====================================Report===================================
 
     
 

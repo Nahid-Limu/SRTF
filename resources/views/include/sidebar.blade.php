@@ -121,6 +121,13 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('report') }}">
+            <i class="fas fa-file-alt"></i>
+            <span>Report</span>
+        </a>
+    </li>
+
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">
 

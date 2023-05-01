@@ -10,7 +10,7 @@
         <strong id="success_message" class="text-success"></strong>
         
         <div class="dropdown no-arrow">
-          <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#AddAttendanceModal"><i class="fas fa-plus fa-fw mr-2 text-gray-400"></i>Add New</button>
+          {{-- <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#AddAttendanceModal"><i class="fas fa-plus fa-fw mr-2 text-gray-400"></i>Add New</button> --}}
         </div>
       </div>
       <!-- Card Body -->
@@ -96,11 +96,11 @@
 });
 
 
- function checkInOut(emp_id,check) {
-    //  alert(check);
+ function checkInOut(emp_id,check,shiftsId) {
+    //  alert(emp_id+"/"+check+"/"+shiftsId);
      $.ajax({
         type: 'GET',
-        url: "{{url('checkInOut')}}"+"/"+emp_id+"/"+check,
+        url: "{{url('checkInOut')}}"+"/"+emp_id+"/"+check+"/"+shiftsId,
          
          success: function (response) {
              console.log(response);
