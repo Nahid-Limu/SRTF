@@ -87,4 +87,10 @@ class EmployeeController extends Controller
             return response()->json(['falied' => 'Delete falied !!!']);
         }
     }
+
+    public function all_employees()
+    {
+        $Employees = DB::table('employees')->get(['id','employee_code','employee_name']);
+        return view('ajax.get_employees',compact('Employees'));
+    }
 }

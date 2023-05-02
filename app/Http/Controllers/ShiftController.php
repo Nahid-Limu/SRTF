@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Shift;
 use Illuminate\Http\Request;
 use DB;
+use App\CustomClass\TimeCalculation;
 
 class ShiftController extends Controller
 {
     public function index()
     {
         
-        // $Shift = Shift::all();
-        // dd( $Shift);
+        // $Shift = Shift::first();
+        // dd( $Shift->entry_time);
+        // $time = TimeCalculation::subtractTime($Shift->exit_time,$Shift->entry_time);
+        // dd( $time);
         // $time =  ( date( "H:i", strtotime("00:00") + strtotime($Shift->exit_time) - strtotime($Shift->entry_time) ) );
         // $f =  ( date( "H:i", strtotime("00:00") + strtotime($time) - strtotime($Shift->break_time) ) );
         // dd( $f);
@@ -54,9 +57,9 @@ class ShiftController extends Controller
                     })
 
                     ->addColumn('work_time', function($data){
-                        return abs( ( ( int)$data->exit_time - (int)$data->entry_time ) ) - (int)$data->break_time  ." Hr";
-                        
-                        return $button;
+                        // return abs( ( ( int)$data->exit_time - (int)$data->entry_time ) ) - (int)$data->break_time  ." Hr";
+                        return $time = TimeCalculation::subtractTime($data->entry_time,$data->exit_time);
+                        // return $button;
                     })
 
                     ->rawColumns(['work_time','action'])

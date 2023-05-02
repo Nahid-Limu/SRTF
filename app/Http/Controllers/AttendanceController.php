@@ -8,6 +8,7 @@ use App\Shift;
 use App\Designation;
 use Illuminate\Http\Request;
 use DB;
+use App\CustomClass\TimeCalculation;
 
 class AttendanceController extends Controller
 {
@@ -15,7 +16,7 @@ class AttendanceController extends Controller
     {
         // $Attendance = Attendance::where('employee_id', 2)
         // // ->where('created_at', '=', DB::raw('attendances_date'))
-        // ->whereRaw('created_at = attendances_date')
+        // ->whereRaw('Date(created_at) = attendances_date')
         // ->where('status',2)
         // // ->count('Check_in');
         // ->get();
@@ -85,12 +86,13 @@ class AttendanceController extends Controller
                         // } else {
                         //     $button = '<button type="button" disabled onclick="checkInOut('.$data->id.',\''.$checkOut.'\')" name="checkOut" id="'.$data->id.'" class="delete btn btn-danger btn-sm" data-placement="top" title="Check Out"  "><i class="fa fa-times"> checkOut</i></button></div>';
                         // }
-
+                        
                         $checkOut = 2;
+                        $shiftsId = $data->shifts_id;
                         $Attendance = Attendance::where('employee_id', $data->id)->whereRaw('Date(created_at) = attendances_date')->where('status',1)->count('Check_in');
                         // $Attendance = Attendance::where('employee_id', $data->id)->where('status', 1)->whereDate('created_at', date("Y-m-d") )->count('Check_in');
                         if ($Attendance == 1) {
-                            $button = '<button type="button" onclick="checkInOut('.$data->id.',\''.$checkOut.'\')" name="checkOut" id="'.$data->id.'" class="delete btn btn-danger btn-sm" data-placement="top" title="Check Out"  "><i class="fa fa-times"> checkOut</i></button></div>';
+                            $button = '<button type="button" onclick="checkInOut('.$data->id.', '.$checkOut.','.$shiftsId.' )" name="checkOut" id="'.$data->id.'" class="delete btn btn-danger btn-sm" data-placement="top" title="Check Out"  "><i class="fa fa-times"> checkOut</i></button></div>';
                         } else {
                             $button = '<button type="button" disabled onclick="checkInOut('.$data->id.',\''.$checkOut.'\')" name="checkOut" id="'.$data->id.'" class="delete btn btn-danger btn-sm" data-placement="top" title="Check Out"  "><i class="fa fa-times"> checkOut</i></button></div>';
                         }
@@ -189,7 +191,7 @@ class AttendanceController extends Controller
     {
         // dd( gettype($check) );
         $today = date("Y-m-d");
-        $timeNow= date('H:i',time());
+        $timeNow = date('H:i',time());
 
         $Attendance = Attendance::where('employee_id', $eid)
                     ->whereDate('created_at', $today )
@@ -202,7 +204,7 @@ class AttendanceController extends Controller
             $Attendance->employee_id = $eid;
             $Attendance->shift_id = $shiftsId;
             $Attendance->attendances_date = $today;
-            $Attendance->Check_in = $timeNow;
+            $Attendance->Check_in = date('H:i',time());
             $Attendance->status = $check;
             $Attendance->save();
             // dd( $Attendance->id);
@@ -213,12 +215,30 @@ class AttendanceController extends Controller
                 return response()->json(['failed' => 'Check In failed.']);
             }
         }else {
-            // dd( 'checkOut' );
+
+            $AttendanceData = Attendance::where('employee_id', $eid)
+                            // ->whereDate('attendances_date', date("Y-m-d") )
+                            // ->whereRaw('created_at = attendances_date')
+                            ->whereRaw('Date(created_at) = attendances_date')
+                            ->where('status',1)
+                            ->first();
+            
+            $Work_time = TimeCalculation::subtractTime( $AttendanceData->Check_in, date('H:i',time()) );
+            $break_time = TimeCalculation::subtractTime( $AttendanceData->break_start, $AttendanceData->break_end );
+            $lunch_time = TimeCalculation::subtractTime( $AttendanceData->lunch_start, $AttendanceData->lunch_end );
+            
+            $total_break = TimeCalculation::sumTime( $lunch_time, $break_time );
+            $total_Work_time = TimeCalculation::subtractTime( $total_break, $Work_time );
+            // dd( $total_Work_time,$Work_time, $total_break );
+            
             $Attendance = DB::table('attendances')
                 ->where('employee_id', $eid)
+                ->whereDate('created_at', $today )
                 ->update([
-                    'Check_out' => $timeNow ,
-                    'status' => $check
+                    'Check_out' => date('H:i',time()) ,
+                    'status' => $check,
+                    'total_break' => $total_break,
+                    'work_time' => $total_Work_time,
                 ]);
 
             // dd( $Attendance);

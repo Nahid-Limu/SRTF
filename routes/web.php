@@ -60,7 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
     
 
     // ====================================AJAX REQUESTS route start===================================
-    // Route::get('/ajax/all_company','CompanyController@all_company')->name('ajax.all_company');
+    Route::get('/ajax/all_employees','EmployeeController@all_employees')->name('ajax.all_employees');
     // Route::get('/ajax/all_group/{c_id}','ProductController@all_group')->name('ajax.all_group');
     // Route::get('/ajax/company_wise_group/{c_id}','ProductController@company_wise_group')->name('ajax.company_wise_group');
 

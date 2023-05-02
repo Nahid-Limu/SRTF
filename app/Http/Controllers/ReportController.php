@@ -11,25 +11,17 @@ use DB;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        // $Designation = Designation::all();
+        // dd( $request->all() );
+        $ReportData = DB::table('attendances')
+            // ->join('employees', 'attendances.employee_id', '=', 'employees.id')
+            
+            // ->select('employees.id','employees.employee_name')
+            // ->groupBy('attendances.employees_id')
+            ->get();
+        dd($ReportData );
         
-        // if(request()->ajax())
-        // {
-        //     return datatables()->of($Designation)
-                    
-        //             ->addColumn('action', function($data){
-        //                 $button = '<button type="button" onclick="deleteModal('.$data->id.',\''.$data->designation_name.'\')" name="delete" id="'.$data->id.'" class="delete btn btn-sm" data-toggle="modal" data-target="#DeleteConfirmationModal" data-placement="top" title="Delete"  style="color: red"><i class="fa fa-trash"> Delete</i></button></div>';
-                        
-        //                 return $button;
-        //             })
-        //             ->rawColumns(['action'])
-        //             ->addIndexColumn()
-        //             ->make(true);
-                    
-        // }
         return view('report');
     }
 }

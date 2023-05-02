@@ -11,6 +11,9 @@
 <!-- Page level plugins -->
   <script src="vendor/chart.js/Chart.min.js"></script>
 
+<!-- select2 plugins -->
+  <script src="js/select2.js"></script>
+
 <!-- Page level custom scripts -->
 
   <script src="js/datatables.min.js"></script>

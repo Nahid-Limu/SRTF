@@ -24,6 +24,8 @@ class CreateAttendancesTable extends Migration
             $table->time('break_end')->nullable();
             $table->time('lunch_start')->nullable();
             $table->time('lunch_end')->nullable();
+            $table->time('total_break')->nullable();
+            $table->time('work_time')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
