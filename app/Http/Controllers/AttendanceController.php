@@ -14,31 +14,11 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        // $Attendance = Attendance::where('employee_id', 2)
-        // // ->where('created_at', '=', DB::raw('attendances_date'))
-        // ->whereRaw('Date(created_at) = attendances_date')
-        // ->where('status',2)
-        // // ->count('Check_in');
-        // ->get();
-
-        // $Attendance = Attendance::where('employee_id', 1)->whereRaw('Date(created_at) = attendances_date')->where('status',1)->count('Check_in');
-        // $AttendanceData = Attendance::where('employee_id', 1)->whereDate('attendances_date', date("Y-m-d") )->where('status',2)->first();
         
-        // if ($AttendanceData->attendances_date != date("Y-m-d")) {
-        //     dd('not today');
-        // } else {
-        //     dd(' today');
-        // }
-        
-
-        // $t=time();
-        // echo(date('h:i',$t));
-
-
         $Employees = DB::table('employees')
-            ->join('shifts', 'employees.shift_id', '=', 'shifts.id')
-            ->select('employees.id','employees.employee_name','employees.employee_code','shifts.id as shifts_id','shifts.shift_name','shifts.entry_time','shifts.exit_time')
-            ->get();
+                    ->join('shifts', 'employees.shift_id', '=', 'shifts.id')
+                    ->select('employees.id','employees.employee_name','employees.employee_code','shifts.id as shifts_id','shifts.shift_name','shifts.entry_time','shifts.exit_time')
+                    ->get();
         // dd($Employees );
         
         if(request()->ajax())
@@ -55,49 +35,31 @@ class AttendanceController extends Controller
                     ->addColumn('checkIn', function($data){
                         $checkIn = 1;
                         $shiftsId = $data->shifts_id;
-                        // $today = date("Y-m-d");
-                        // $Attendance = Attendance::where('employee_id', $data->id)->whereDate('created_at', date("Y-m-d") )->count('Check_in');
-                        // if ($Attendance <= 0) {
-                        //     $button = '<button type="button"  onclick="checkInOut('.$data->id.',\''.$checkIn.'\')" name="checkIn" id="'.$data->id.'" class="delete btn btn-success btn-sm" data-placement="top" title="Check In"  "><i class="fa fa-check"> checkIn</i></button></div>';
-                        // } else {
-                        //     $button = '<button type="button" disabled  onclick="checkInOut('.$data->id.',\''.$checkIn.'\')" name="checkIn" id="'.$data->id.'" class="delete btn btn-success btn-sm" data-placement="top" title="Check In"  "><i class="fa fa-check"> checkIn</i></button></div>';
-                        // }
 
                         $AttendanceData = Attendance::where('employee_id', $data->id)->whereDate('attendances_date', date("Y-m-d") )->where('status',2)->first();
-
+                        
                         $Attendance = Attendance::where('employee_id', $data->id)->whereRaw('Date(created_at) = attendances_date')->where('status',1)->count('Check_in');
-                        // $Attendance = Attendance::where('employee_id', $data->id)->where('status',0)->whereDate('created_at', 'attendances_date' )->count('Check_in');
+
                         if ($Attendance <= 0 && $AttendanceData['attendances_date'] != date("Y-m-d") ) {
                             $button = '<button type="button"  onclick="checkInOut('.$data->id.', '.$checkIn.','.$shiftsId.' )" name="checkIn" id="'.$data->id.'" class="delete btn btn-success btn-sm" data-placement="top" title="Check In"  "><i class="fa fa-check"> checkIn</i></button></div>';
                         } else {
                             $button = '<button type="button" disabled  onclick="checkInOut('.$data->id.',\''.$checkIn.'\')" name="checkIn" id="'.$data->id.'" class="delete btn btn-success btn-sm" data-placement="top" title="Check In"  "><i class="fa fa-check"> checkIn</i></button></div>';
                         }
                         
-                        
-                        
                         return $button;
                     })
 
                     ->addColumn('checkOut', function($data){
-                        // $checkOut = 0;
-                        // $Attendance = Attendance::where('employee_id', $data->id)->where('status', 1)->whereDate('created_at', date("Y-m-d") )->count('Check_in');
-                        // if ($Attendance == 1) {
-                        //     $button = '<button type="button" onclick="checkInOut('.$data->id.',\''.$checkOut.'\')" name="checkOut" id="'.$data->id.'" class="delete btn btn-danger btn-sm" data-placement="top" title="Check Out"  "><i class="fa fa-times"> checkOut</i></button></div>';
-                        // } else {
-                        //     $button = '<button type="button" disabled onclick="checkInOut('.$data->id.',\''.$checkOut.'\')" name="checkOut" id="'.$data->id.'" class="delete btn btn-danger btn-sm" data-placement="top" title="Check Out"  "><i class="fa fa-times"> checkOut</i></button></div>';
-                        // }
                         
                         $checkOut = 2;
                         $shiftsId = $data->shifts_id;
                         $Attendance = Attendance::where('employee_id', $data->id)->whereRaw('Date(created_at) = attendances_date')->where('status',1)->count('Check_in');
-                        // $Attendance = Attendance::where('employee_id', $data->id)->where('status', 1)->whereDate('created_at', date("Y-m-d") )->count('Check_in');
+                        
                         if ($Attendance == 1) {
                             $button = '<button type="button" onclick="checkInOut('.$data->id.', '.$checkOut.','.$shiftsId.' )" name="checkOut" id="'.$data->id.'" class="delete btn btn-danger btn-sm" data-placement="top" title="Check Out"  "><i class="fa fa-times"> checkOut</i></button></div>';
                         } else {
                             $button = '<button type="button" disabled onclick="checkInOut('.$data->id.',\''.$checkOut.'\')" name="checkOut" id="'.$data->id.'" class="delete btn btn-danger btn-sm" data-placement="top" title="Check Out"  "><i class="fa fa-times"> checkOut</i></button></div>';
                         }
-
-
                         return $button;
                     })
 
@@ -105,10 +67,7 @@ class AttendanceController extends Controller
                     ->addColumn('breakfast', function($data){
                         $breakfast_start = 1;
                         $breakfast_end = 0;
-                        // $Attendance = Attendance::where('employee_id', $data->id)->where('status', 1)->whereDate('created_at', date("Y-m-d") )->count('Check_in');
-                        // $Break_start = Attendance::where('employee_id', $data->id)->where('status', 1)->whereDate('created_at', date("Y-m-d") )->whereNotNull('break_start')->count('break_start');
-                        // $Break_end = Attendance::where('employee_id', $data->id)->where('status', 1)->whereDate('created_at', date("Y-m-d") )->whereNotNull('break_end')->count('break_end');
-
+                        
                         $Attendance = Attendance::where('employee_id', $data->id)->where('status',1)->whereRaw('Date(created_at) = attendances_date')->count('Check_in');
                         $Break_start = Attendance::where('employee_id', $data->id)->where('status', 1)->whereRaw('Date(created_at) = attendances_date')->whereNotNull('break_start')->count('break_start');
                         $Break_end = Attendance::where('employee_id', $data->id)->where('status', 1)->whereRaw('Date(created_at) = attendances_date')->whereNotNull('break_end')->count('break_end');
@@ -143,10 +102,7 @@ class AttendanceController extends Controller
                     ->addColumn('lunch', function($data){
                         $lunchStart = 1;
                         $lunchEnd = 0;
-                        // $Attendance = Attendance::where('employee_id', $data->id)->where('status', 1)->whereDate('created_at', date("Y-m-d") )->count('Check_in');
-                        // $Lunch_start = Attendance::where('employee_id', $data->id)->where('status', 1)->whereDate('created_at', date("Y-m-d") )->whereNotNull('lunch_start')->count('lunch_start');
-                        // $Lunch_end = Attendance::where('employee_id', $data->id)->where('status', 1)->whereDate('created_at', date("Y-m-d") )->whereNotNull('lunch_end')->count('lunch_end');
-
+                        
                         $Attendance = Attendance::where('employee_id', $data->id)->where('status', 1)->whereRaw('Date(created_at) = attendances_date')->count('Check_in');
                         $Lunch_start = Attendance::where('employee_id', $data->id)->where('status', 1)->whereRaw('Date(created_at) = attendances_date')->whereNotNull('lunch_start')->count('lunch_start');
                         $Lunch_end = Attendance::where('employee_id', $data->id)->where('status', 1)->whereRaw('Date(created_at) = attendances_date')->whereNotNull('lunch_end')->count('lunch_end');
@@ -178,7 +134,6 @@ class AttendanceController extends Controller
                     })
 
                     
-
                     ->rawColumns(['shift','checkIn','breakfast','lunch','checkOut'])
                     ->addIndexColumn()
                     ->make(true);
@@ -217,8 +172,6 @@ class AttendanceController extends Controller
         }else {
 
             $AttendanceData = Attendance::where('employee_id', $eid)
-                            // ->whereDate('attendances_date', date("Y-m-d") )
-                            // ->whereRaw('created_at = attendances_date')
                             ->whereRaw('Date(created_at) = attendances_date')
                             ->where('status',1)
                             ->first();
@@ -232,14 +185,14 @@ class AttendanceController extends Controller
             // dd( $total_Work_time,$Work_time, $total_break );
             
             $Attendance = DB::table('attendances')
-                ->where('employee_id', $eid)
-                ->whereDate('created_at', $today )
-                ->update([
-                    'Check_out' => date('H:i',time()) ,
-                    'status' => $check,
-                    'total_break' => $total_break,
-                    'work_time' => $total_Work_time,
-                ]);
+                        ->where('employee_id', $eid)
+                        ->whereDate('created_at', $today )
+                        ->update([
+                            'Check_out' => date('H:i',time()) ,
+                            'status' => $check,
+                            'total_break' => $total_break,
+                            'work_time' => $total_Work_time,
+                        ]);
 
             // dd( $Attendance);
             if ($Attendance) {
@@ -265,11 +218,11 @@ class AttendanceController extends Controller
         if ($Attendance == 1 && $breakfast == 1) {
             // dd( 'break st' );
             $Attendance = DB::table('attendances')
-                ->where('employee_id', $eid)
-                ->where('status', 1)
-                ->update([
-                    'break_start' => $timeNow 
-                ]);
+                        ->where('employee_id', $eid)
+                        ->where('status', 1)
+                        ->update([
+                            'break_start' => $timeNow 
+                        ]);
 
             if ($Attendance ) {
                 return response()->json(['success' => 'Break Start successfully.']);
@@ -279,11 +232,11 @@ class AttendanceController extends Controller
         }else {
             // dd( 'break end' );
             $Attendance = DB::table('attendances')
-                ->where('employee_id', $eid)
-                ->where('status', 1)
-                ->update([
-                    'break_end' => $timeNow
-                ]);
+                        ->where('employee_id', $eid)
+                        ->where('status', 1)
+                        ->update([
+                            'break_end' => $timeNow
+                        ]);
 
             if ($Attendance) {
                 return response()->json(['success' => 'Break End successfully.']);
@@ -308,11 +261,11 @@ class AttendanceController extends Controller
         if ($Attendance == 1 && $lunch == 1) {
             // dd( 'break st' );
             $Attendance = DB::table('attendances')
-                ->where('employee_id', $eid)
-                ->where('status', 1)
-                ->update([
-                    'lunch_start' => $timeNow 
-                ]);
+                        ->where('employee_id', $eid)
+                        ->where('status', 1)
+                        ->update([
+                            'lunch_start' => $timeNow 
+                        ]);
 
             if ($Attendance ) {
                 return response()->json(['success' => 'Lunch Time Start successfully.']);
@@ -322,11 +275,11 @@ class AttendanceController extends Controller
         }else {
             // dd( 'break end' );
             $Attendance = DB::table('attendances')
-                ->where('employee_id', $eid)
-                ->where('status', 1)
-                ->update([
-                    'lunch_end' => $timeNow
-                ]);
+                        ->where('employee_id', $eid)
+                        ->where('status', 1)
+                        ->update([
+                            'lunch_end' => $timeNow
+                        ]);
 
             if ($Attendance) {
                 return response()->json(['success' => 'Lunch Time End successfully.']);

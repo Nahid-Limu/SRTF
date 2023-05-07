@@ -18,6 +18,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
+    Route::get('/dashboard', 'Dashboard@index')->name('dashboard');
+
     // ====================================Designation===================================
     Route::get('/designation', 'DesignationController@index')->name('designation');
     Route::post('/addDesignation', 'DesignationController@addDesignation')->name('addDesignation');
@@ -51,10 +53,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // ====================================Report===================================
     Route::get('/report', 'ReportController@index')->name('report');
-    // Route::post('/addDesignation', 'ReportController@addDesignation')->name('addDesignation');
-    // Route::get('/editTest/{id}', 'TestController@editTest')->name('editTest');
-    // Route::post('/updateTest', 'TestController@updateTest')->name('updateTest');
-    // Route::get('/deleteDesignation/{id}', 'DesignationController@deleteDesignation')->name('deleteDesignation');
     // ====================================Report===================================
 
     

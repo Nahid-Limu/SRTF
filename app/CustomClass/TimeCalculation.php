@@ -53,4 +53,22 @@ Class TimeCalculation{
         // }
 
     /*Sum  time: (hours with minutes and seconds)*/
+
+
+    /*Sum  time: (hours with minutes and seconds)*/
+
+        public static function HourlyRateCalculator($cost, $time) {
+            
+            $iCostPerHour = $cost;
+            $timespent = $time;
+            $timeparts=explode(':',$timespent);
+            $pay=$timeparts[0]*$iCostPerHour+$timeparts[1]/60*$iCostPerHour;
+           
+            return $pay;
+        }
+
+    /*Sum  time: (hours with minutes and seconds)*/
+
+
+    
 } 

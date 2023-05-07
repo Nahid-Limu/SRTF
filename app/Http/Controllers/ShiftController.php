@@ -11,14 +11,6 @@ class ShiftController extends Controller
 {
     public function index()
     {
-        
-        // $Shift = Shift::first();
-        // dd( $Shift->entry_time);
-        // $time = TimeCalculation::subtractTime($Shift->exit_time,$Shift->entry_time);
-        // dd( $time);
-        // $time =  ( date( "H:i", strtotime("00:00") + strtotime($Shift->exit_time) - strtotime($Shift->entry_time) ) );
-        // $f =  ( date( "H:i", strtotime("00:00") + strtotime($time) - strtotime($Shift->break_time) ) );
-        // dd( $f);
 
         $Shift = Shift::all();
         if(request()->ajax())
@@ -30,21 +22,6 @@ class ShiftController extends Controller
                         
                         return $button;
                     })
-                    // ->editColumn('entry_time', function ($data) {
-                    //     return date('h:i A', strtotime($data->entry_time));
-                    // })
-                    // ->editColumn('exit_time', function ($data) {
-                    //     return date('h:i A', strtotime($data->exit_time));
-                    // })
-                    // ->editColumn('break_time', function ($data) {
-                    //     return date('h:i', strtotime($data->break_time))." Hr";
-                    // })
-
-                    // ->addColumn('work_time', function($data){
-                    //     return ( date( "H:i", strtotime("00:00") + strtotime($data->exit_time) - strtotime($data->entry_time) - strtotime($data->break_time)  ) );
-                        
-                    //     return $button;
-                    // })
 
                     ->editColumn('entry_time', function ($data) {
                         return date('h:i A', strtotime($data->entry_time));

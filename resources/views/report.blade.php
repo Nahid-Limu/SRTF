@@ -71,55 +71,64 @@
       <!-- Card Body -->
       <div class="card-body">
         @isset($ReportData)
-        <div id="printableTable">
-          <div id="company_details" class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
-              <span style="text-align: center" class="text-warning"><i class="fa fa-puzzle-piece" aria-hidden="true"></i> <b style="color: green">Sazeda RafiquenTea Factory Ltd.</b> <i class="fa fa-puzzle-piece" aria-hidden="true"></i> <br><i style="color: gray">Moulovipara, Jagdol, Panchagarh.</i> <br> <hr><hr> </span>   
+
+          <div id="printableTable">
+
+            <div id="company_details" class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+                <span style="text-align: center" class="text-warning"><i class="fa fa-puzzle-piece" aria-hidden="true"></i> <b style="color: green">Sazeda RafiquenTea Factory Ltd.</b> <i class="fa fa-puzzle-piece" aria-hidden="true"></i> <br><i style="color: gray">Moulovipara, Jagdol, Panchagarh.</i> <br> <hr><hr> </span>   
+            </div>
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+              @isset($dates)
+                <h6 class="m-0 font-weight-bold text-danger ">Employee Report From: <kbd>{{ $dates['from'] }}</kbd> To: <kbd>{{ $dates['to'] }}</kbd></h6> 
+              @endisset
+            </div>
+
+            <table id="DesignationListTable" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        {{-- <th class="text-center">#NO</th> --}}
+                        <th class="text-center">Name</th>
+                        <th class="text-center">ID No</th>
+                        <th class="text-center">Break Hour</th>
+                        <th class="text-center">Working Hour</th>
+                        <th class="text-center">Salary BDT/hr</th>
+                        <th class="text-center">Salary</th>
+                        {{-- <th class="text-center">Salary BDT/hr</th> --}}
+                        {{-- <th class="text-center">Action</th> --}}
+                    </tr>
+                </thead>
+                <tbody>
+                  @foreach ($ReportData as $Report)
+                  @php
+                      $totalSalary = App\CustomClass\TimeCalculation::HourlyRateCalculator($Report->salary,$Report->work_time);
+                  @endphp
+                      <tr>
+                        {{-- <td>{{ $no++ }}</td> --}}
+                        <td>{{ $Report->employee_name }}</td>
+                        <td>{{ $Report->employee_code }}</td>
+                        <td>{{ $Report->total_break }} Hr</td>
+                        <td>{{ $Report->work_time }} Hr</td>
+                        <td>{{ $Report->salary }} Tk</td>
+                        <td>{{ $totalSalary }} Tk</td>
+                        
+                      </tr>
+                  @endforeach
+                </tbody>
+            </table>
+
           </div>
-          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
-            @isset($dates)
-              <h6 class="m-0 font-weight-bold text-danger ">Employee Report From: <kbd>{{ $dates['from'] }}</kbd> To: <kbd>{{ $dates['to'] }}</kbd></h6> 
-            @endisset
-          </div>
-        <table id="DesignationListTable" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    {{-- <th class="text-center">#NO</th> --}}
-                    <th class="text-center">Name</th>
-                    <th class="text-center">ID No</th>
-                    <th class="text-center">Break Hour</th>
-                    <th class="text-center">Working Hour</th>
-                    <th class="text-center">Salary BDT/hr</th>
-                    <th class="text-center">Salary</th>
-                    {{-- <th class="text-center">Salary BDT/hr</th> --}}
-                    {{-- <th class="text-center">Action</th> --}}
-                </tr>
-            </thead>
-            <tbody>
-              @foreach ($ReportData as $Report)
-                  <tr>
-                    {{-- <td>{{ $no++ }}</td> --}}
-                    <td>{{ $Report->employee_name }}</td>
-                    <td>{{ $Report->employee_code }}</td>
-                    <td>{{ $Report->total_break }} Hr</td>
-                    <td>{{ $Report->work_time }} Hr</td>
-                    <td>{{ $Report->salary }} Bdt</td>
-                    <td>{{ $Report->total_salary }} Bdt</td>
-                    
-                  </tr>
-              @endforeach
-            </tbody>
-        </table>
-      </div>
-      <iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
-      <form action="{{route('report')}}" method="get">
-        @csrf
-        <input type="hidden" name="btnExport" value="csv">
-        <input type="hidden" name="employee_id" value="{{ $employee_id }}">
-        <input type="hidden" name="exp_from" value="{{ $dates['from'] }}">
-        <input type="hidden" name="exp_to" value="{{ $dates['to'] }}">
-        <button class="btn btn-sm btn-info float-left" type="submit"><i class="fas fa-file-csv"> Export Report</i></button>
-      </form>
-      <button class="btn btn-sm btn-warning float-right" onclick="printDiv('printableTable')"><i class="fas fa-print"> Print</i></button>
+
+          <iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
+          <form action="{{route('report')}}" method="get">
+            @csrf
+            <input type="hidden" name="btnExport" value="csv">
+            <input type="hidden" name="employee_id" value="{{ $employee_id }}">
+            <input type="hidden" name="exp_from" value="{{ $dates['from'] }}">
+            <input type="hidden" name="exp_to" value="{{ $dates['to'] }}">
+            <button class="btn btn-sm btn-info float-left" type="submit"><i class="fas fa-file-csv"> Export Report</i></button>
+          </form>
+          <button class="btn btn-sm btn-warning float-right" onclick="printDiv('printableTable')"><i class="fas fa-print"> Print</i></button>
+        
         @endisset
         
       </div>

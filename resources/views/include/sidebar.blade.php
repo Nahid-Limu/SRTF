@@ -6,7 +6,7 @@
       <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
       </div>
-      <div class="sidebar-brand-text mx-3">SRTF <sup>Ltd.</sup></div>
+      <div class="sidebar-brand-text mx-3 text-success">SRTF <sup class="text-danger">Ltd.</sup></div>
   </a>
 
   <!-- Divider -->
@@ -14,7 +14,7 @@
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item active">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="{{ route('dashboard') }}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
   </li>
@@ -66,8 +66,8 @@
   <hr class="sidebar-divider">
 
   <!-- Heading -->
-  <div class="sidebar-heading">
-      Core
+  <div class="sidebar-heading text-danger">
+      Core Module
   </div>
 
   
@@ -90,6 +90,11 @@
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">
 
+  <!-- Heading -->
+    <div class="sidebar-heading text-danger">
+        Setting Module
+    </div>
+
   <!-- Nav Item - Utilities Collapse Menu -->
   <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSettings"
@@ -100,7 +105,7 @@
       <div id="collapseSettings" class="collapse" aria-labelledby="headingUtilities"
           data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Settings:</h6>
+              <h6 class="collapse-header text-info">Settings:</h6>
               <a class="collapse-item" href="{{ route('designation') }}">Designation</a>
               <a class="collapse-item" href="{{ route('shift') }}">Shift</a>
               <a class="collapse-item" href="{{ route('employee') }}">Employee</a>

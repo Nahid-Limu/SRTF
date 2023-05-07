@@ -9,12 +9,13 @@ use App\Designation;
 use Illuminate\Http\Request;
 use DB;
 use App\User;
+use App\CustomClass\TimeCalculation;
 
 class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        // dd( $request->all() );
+        
         $dates = [
             'from' => $request->from,
             'to' => $request->to
@@ -30,7 +31,7 @@ class ReportController extends Controller
                             'employees.id','employees.employee_name','employees.employee_code',
                             DB::raw("SEC_TO_TIME( SUM( TIME_TO_SEC( work_time) ) ) as work_time"),
                             DB::raw("SEC_TO_TIME( SUM( TIME_TO_SEC( total_break) ) ) as total_break"),
-                            DB::raw(" (SEC_TO_TIME( SUM( TIME_TO_SEC( work_time) ) ) * designations.salary)/10000  as total_salary"),
+                            // DB::raw(" (SEC_TO_TIME( SUM( TIME_TO_SEC( work_time) ) ) * designations.salary)/10000  as total_salary"),
                             'designations.salary',
                             )
                         ->groupBy('employee_id')
@@ -42,7 +43,7 @@ class ReportController extends Controller
 
                         $ReportData = $ReportData->get();
 
-            // dd($ReportData );
+                    // dd($ReportData );
             if (count($ReportData)>0) {
                 return view('report', compact('ReportData','dates','employee_id') );
             }
@@ -68,17 +69,32 @@ class ReportController extends Controller
                         }
 
                         $ReportData = $ReportData->get();
-            
-            // $discount = Discount::whereBetween('created_at', [$request->exp_from, $request->exp_to])->sum('discount_amount');
-            // $expense = DailyExpense::whereBetween('created_at', [$request->exp_from, $request->exp_to])->sum('ammount');
+        
 
-            $headers = ['Name','Id No','Break Hour','Working Hour','Salary BDT/hr','Salary (Total)'];
-            // $discount = ['','','DISCOUNT','=>',$discount];
-            // $expense = ['','','EXPENSE','=>',$expense];
-            $dates = ['FROM',$request->exp_from,'','TO',$request->exp_to];
+            // ReMake Array
+                $newData =[];
+                foreach ($ReportData as $arraykey => $arrayData) {
+
+                    $totalSalary = TimeCalculation::HourlyRateCalculator($arrayData->salary,$arrayData->work_time);
+                    $key ='total_salary';
+                    $new_key ='total_salary';
+                    $new_value =$totalSalary;
+                    
+                    
+                    $array = (array)$arrayData;
+                    $data =  $this->array_insert_after($key, $array, $new_key, $new_value);
+                    $newData[$arraykey] =$data;
+                    
+
+                }
+                // dd($newData);
+            // ReMake Array
             
+            $headers = ['Name','Id No','Break Hour','Working Hour','Salary BDT/hr','Salary (Total)'];
+            $dates = ['FROM',$request->exp_from,'','TO',$request->exp_to];
+
             // dd( $dates );
-             return $this->download($ReportData,$headers, "Report-$request->exp_from-to-$request->exp_to.csv",$dates);
+             return $this->download($newData,$headers, "Report-$request->exp_from-to-$request->exp_to.csv",$dates);
         }
 
         
@@ -101,8 +117,6 @@ class ReportController extends Controller
         }
 
         $export .="----------------------------------------------------"."\n";
-        // $export .= implode(",",$discount)."\n";
-        // $export .= implode(",",$expense)."\n";
         
         $export = mb_convert_encoding($export,"SJIS", "UTF-8");
         $filename = mb_convert_encoding($filename,"SJIS", "UTF-8");
@@ -110,5 +124,19 @@ class ReportController extends Controller
         header('Content-Disposition: attachment; filename='.$filename);
         echo $export;
         exit();
+    }
+
+    private function array_insert_after($key, array &$array, $new_key, $new_value) {
+        if (array_key_exists($key, $array)) {
+            $new = array();
+            foreach ($array as $k => $value) {
+            $new[$k] = $value;
+            if ($k === $key) {
+                $new[$new_key] = $new_value;
+            }
+            }
+            return $new;
+        }
+        return FALSE;
     }
 }

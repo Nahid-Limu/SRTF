@@ -12,11 +12,10 @@ class EmployeeController extends Controller
     public function index()
     {
         $Employees = DB::table('employees')
-            ->join('designations', 'employees.designation_id', '=', 'designations.id')
-            ->join('shifts', 'employees.shift_id', '=', 'shifts.id')
-            ->select('employees.id','employees.employee_name','employees.employee_code','employees.employee_phone','designations.designation_name','designations.salary','shifts.entry_time','shifts.exit_time')
-            // ->orderBy('products.group_id','products.company_id')
-            ->get();
+                    ->join('designations', 'employees.designation_id', '=', 'designations.id')
+                    ->join('shifts', 'employees.shift_id', '=', 'shifts.id')
+                    ->select('employees.id','employees.employee_name','employees.employee_code','employees.employee_phone','designations.designation_name','designations.salary','shifts.entry_time','shifts.exit_time')
+                    ->get();
         // dd($Employees );
         if(request()->ajax())
         {
@@ -27,24 +26,13 @@ class EmployeeController extends Controller
                         
                         return $button;
                     })
-                    // ->editColumn('entry_time', function ($Shift) {
-                    //     return date('h:i A', strtotime($Shift->entry_time));
-                    // })
+                    
                     ->editColumn('designation', function ($data) {
                         return $data->designation_name.' - '.$data->salary.' BDT/hr';
                     })
                     ->editColumn('time', function ($data) {
                         return ( date('h:i A', strtotime($data->entry_time)) ." To ".  date('h:i A', strtotime($data->exit_time)));
                     })
-                    // ->editColumn('break_time', function ($Shift) {
-                    //     return date('h:i', strtotime($Shift->break_time))." Hr";
-                    // })
-
-                    // ->addColumn('work_time', function($data){
-                    //     return ( date( "H:i", strtotime("00:00") + strtotime($data->exit_time) - strtotime($data->entry_time) - strtotime($data->break_time)  ) );
-                        
-                    //     return $button;
-                    // })
 
                     ->rawColumns(['action'])
                     ->addIndexColumn()
