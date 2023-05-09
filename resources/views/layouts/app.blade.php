@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- <title>{{ config('app.name', 'DSMS') }}</title> --}}
+    <link rel="icon" type="image/png" href="{!! asset('system_img/icon.ico') !!}"/>
     <title> @yield('title')</title>
 
     <!-- Scripts -->

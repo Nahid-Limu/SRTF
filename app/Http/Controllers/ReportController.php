@@ -34,8 +34,15 @@ class ReportController extends Controller
                             // DB::raw(" (SEC_TO_TIME( SUM( TIME_TO_SEC( work_time) ) ) * designations.salary)/10000  as total_salary"),
                             'designations.salary',
                             )
-                        ->groupBy('employee_id')
-                        ->whereBetween('attendances.attendances_date', [$request->from, $request->to]);
+                        ->groupBy('employee_id');
+
+                        if (isset($request->from, $request->to)) {
+                            $ReportData = $ReportData->whereBetween('attendances.attendances_date', [$request->from, $request->to]);
+                          }else{
+                            $ReportData =  $ReportData->whereDate('attendances.attendances_date', $request->from);
+                          }
+
+                        
                         
                         if($request->employee_id != "all") {
                             $ReportData = $ReportData->where('attendances.employee_id', $request->employee_id);
@@ -46,6 +53,9 @@ class ReportController extends Controller
                     // dd($ReportData );
             if (count($ReportData)>0) {
                 return view('report', compact('ReportData','dates','employee_id') );
+            }else{
+                $message = 'No Data Found.';
+                return view('report', compact('message') );
             }
 
         }elseif (isset($request->btnExport)) {

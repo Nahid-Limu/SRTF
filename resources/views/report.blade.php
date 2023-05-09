@@ -131,6 +131,10 @@
         
         @endisset
         
+        @isset($message)
+         <span class="m-0 font-weight-bold text-danger justify-content-center"> {{ $message }} </span>
+        @endisset
+        
       </div>
     </div>
 </div>
@@ -142,9 +146,9 @@
 
 @section('script')
 {{-- <script src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js" ></script> --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
     integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous">
-</script>
+</script> --}}
 <script>
 
   $( document ).ready(function() {
@@ -174,19 +178,6 @@
  
 </script>
 <script>
-  //print Div//
-  // function printDiv(divName) {
-  //     var printContents = document.getElementById(divName).innerHTML;
-  //     var originalContents = document.body.innerHTML;
-
-  //     document.body.innerHTML = printContents;
-
-  //     window.print();
-
-  //     document.body.innerHTML = originalContents;
-
-  //     // window.location.href = "{{ route('report') }}";
-  // }
 
   function printDiv(divName) {
         // $('#company_details').prop('visible', true);

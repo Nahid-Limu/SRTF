@@ -1,4 +1,5 @@
 <!-- Sidebar -->
+@auth
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
   <!-- Sidebar - Brand -->
@@ -123,4 +124,5 @@
 
 
 </ul>
+@endauth
 <!-- End of Sidebar -->

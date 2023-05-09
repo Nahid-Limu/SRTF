@@ -14,6 +14,9 @@
 <!-- select2 plugins -->
   <script src="js/select2.js"></script>
 
+<!-- jspdf plugins -->
+  <script src="js/jspdf.debug.js"></script>
+
 <!-- Page level custom scripts -->
 
   <script src="js/datatables.min.js"></script>
