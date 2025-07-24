@@ -5,9 +5,6 @@ SRTF EAMS is Sajada Rofiq Tea Factory Employee Attendance Management System With
 ##Tools:
 
     Laravel 5.7,
-    
     MySql,
-    
     Jquary,
-    
     Bootstrap
